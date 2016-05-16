@@ -1,0 +1,84 @@
+﻿@model IEnumerable<PropertyGuide.Models.PropertyOfferViewModel>
+
+@{
+    ViewBag.Title = "MyOffers";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>My Offers</h2>
+
+@if (Model.Count() > 0)
+{
+    <table class="table table-striped">
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    <img src="~/Content/images/property-thumbnail-medium.png" alt="@item.Title" />
+                </td>
+                <td>
+                    <strong>
+                        @Html.DisplayFor(modelItem => item.Title)
+                    </strong>
+                    <p>
+                        @Html.DisplayFor(modelItem => item.Description)
+                    </p>
+
+                    <table class="table table-striped table-bordered no-bottom-margin">
+                        <tr>
+                            <th>
+                                Status
+                            </th>
+                            <th>
+                                Date
+                            </th>
+                        </tr>
+                        <tr>
+                            <td>
+                                @if (item.IsAccepted)
+                                {
+                                    <strong>
+                                        <span class="text-success">Accepted</span>
+                                    </strong>
+                                }
+                                else if (item.IsRejected)
+                                {
+                                    <strong>
+                                        <span class="text-danger">Rejected</span>
+                                    </strong>
+                                }
+                                else
+                                {
+                                    <strong>
+                                        <span class="text-warning">Pending Review</span>
+                                    </strong>
+                                }
+                            </td>
+                            <td>
+                                @if (item.IsAccepted)
+                                {
+                                    <span class="text-success">@item.DateAccepted</span>
+                                }
+                                else if (item.IsRejected)
+                                {
+                                    <span class="text-danger">@item.DateRejected</span>
+                                }
+                                else
+                                {
+                                    <span>N/A</span>
+                                }
+                            </td>
+                        </tr>
+                    </table>
+                </td>
+            </tr>
+        }
+
+    </table>
+}
+else
+{
+    <div class="alert alert-info">
+        There are no offers to show.
+    </div>
+}

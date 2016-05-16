@@ -1,0 +1,67 @@
+﻿@using System.Data.SqlClient
+@using PagedList.Mvc
+@model PagedList.IPagedList<PropertyGuide.Models.PropertyOfferViewModel>
+
+@{
+    ViewBag.Title = "Search";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Find Properties</h2>
+
+@using (Html.BeginForm("Search", "Home", FormMethod.Get))
+{
+    <div class="row">
+        <div class="col-md-4">
+            <div class="form-group">
+                <div class="input-group">
+                    @Html.TextBox("keywords", ViewBag.Keywords as string, new { @class = "form-control", @placeholder = "Enter 'Keywords' to search" })
+                    <div class="input-group-addon">
+                        <input type="submit" value="Search" class="btn btn-primary btn-xs" />
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+}
+
+
+<table class="table table-striped">    
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                <img src="~/Content/images/property-thumbnail-medium.png" alt="@item.Title" />
+            </td>
+            <td>
+                <strong>
+                    @Html.DisplayFor(modelItem => item.Title)
+                </strong>
+                <p>
+                    @Html.DisplayFor(modelItem => item.Description)
+                </p>
+                <p>
+                    <em><small>Added on @item.PropertyDateCreated by @item.SellerFullName.</small></em>
+                </p>
+
+                @if (item.OfferSubmitted)
+                {
+                    <div class="alert alert-success no-bottom-margin">
+                        You've already submitted an offer for this Property!
+                    </div>
+                }
+                else
+                {
+                    @Html.ActionLink("Make an Offer", "MakeOffer", new { id = item.PropertyId }, new { @class = "btn btn-primary btn-sm" });
+                }
+
+                @*@Html.ActionLink("Make an Offer", "MakeOffer", new { id = item.Id }, new { @class = "btn btn-primary btn-sm" })*@
+            </td>
+        </tr>
+    }
+
+</table>
+<br />
+Page @(Model.Count < Model.PageNumber ? 0 : Model.PageNumber) of @Model.PageCount
+
+@Html.PagedListPager(Model, page => Url.Action("Search", new { page, keywords = ViewBag.Keywords }))

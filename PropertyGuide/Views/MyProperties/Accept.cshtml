@@ -1,0 +1,45 @@
+﻿@model PropertyGuide.Models.PropertyOfferViewModel
+
+@{
+    ViewBag.Title = "Accept";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Are you sure you want to accept this property offer?</h2>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <img src="~/Content/images/property.png" alt="@Model.Title" />
+    </div>
+    <div class="col-md-8">
+        <h3>
+            @Model.Title
+        </h3>
+        <p>
+            @Model.Description
+        </p>
+
+        <br />
+        <h4>Property Offer</h4>
+        <p>
+            <strong>Buyer Name: </strong>&nbsp; @Model.BuyerFullName
+        </p>
+        <p>
+            <strong>Buyer Email: </strong>&nbsp; @Model.BuyerEmail
+        </p>
+        <p>
+            <strong>Price Offered: </strong>&nbsp; &pound; @Model.PriceOffered
+        </p>
+
+        <hr />
+        @using (Html.BeginForm())
+        {
+            @Html.AntiForgeryToken()
+
+            <div class="form-actions no-color">
+                <input type="submit" value="Accept" class="btn btn-success btn-sm" /> |
+                @Html.ActionLink("Back to Offers", "Offers", null, new { @class = "btn btn-primary btn-sm" })
+            </div>
+        }
+    </div>
+</div>
