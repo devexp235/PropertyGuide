@@ -7,6 +7,7 @@ namespace PropertyGuide
     {
         public static void RegisterGlobalFilters(GlobalFilterCollection filters)
         {
+            //filters.Add(new AuthorizeAttribute());//make the whole application accessible only by the authenticated users
             filters.Add(new HandleErrorAttribute());
         }
     }
