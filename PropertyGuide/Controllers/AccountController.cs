@@ -448,6 +448,12 @@ namespace PropertyGuide.Controllers
                     _signInManager.Dispose();
                     _signInManager = null;
                 }
+
+                if (_roleManager  != null)
+                {
+                    _roleManager.Dispose();
+                    _roleManager = null;
+                }
             }
 
             base.Dispose(disposing);
